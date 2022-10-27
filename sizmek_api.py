@@ -10,6 +10,7 @@ import requests
 
 from set_up import api_config
 from retrieve_data import retrieve_sizmek_data
+from data_prep import data_prep
 
 
 # Configurations. Please change these accordingly. Below is the Documentation to see params for reporting.
@@ -53,7 +54,9 @@ def run_sizmek_app():
     link_json =  retrieve_sizmek_data(**params)
     data_json = requests.get(link_json)
     data_json = json.loads(data_json.text)
-    print(data_json )
+
+    data_sizmek = data_prep(data_json)
+    print(data_sizmek.info() )
 
 
 if __name__ == "__main__":
