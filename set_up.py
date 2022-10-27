@@ -1,6 +1,6 @@
 null = None
 
-def api_config(account_id, start_date, end_date):
+def api_config(account_id, start_date, end_date, currency_id, conv_tags_ids):
   APIObject = {
       "entities": [{
           "type": "AnalyticsReport",
@@ -17,11 +17,13 @@ def api_config(account_id, start_date, end_date):
               "attributionModelID": -1,
               "impressionCookieWindow": 0,
               "clickCookieWindow": 0,
-              "filters": {},
+              "filters": {
+                "conversionTagIDs": conv_tags_ids
+              },
               "currencyOptions": {
                   "type": "Custom",
-                  "defaultCurrency": 1,
-                  "targetCurrency": 1,
+                  "defaultCurrency": currency_id,
+                  "targetCurrency": currency_id,
                   "currencyExchangeDate": end_date
               },
               "timeRange": {
@@ -58,7 +60,9 @@ def api_config(account_id, start_date, end_date):
             "Total Conversions",
             "Total Media Cost"
           ],
-              "attributeIDsOnColumns": [],
+              "attributeIDsOnColumns": [
+                "Conversion Tag Name"
+              ],
               "timeBreakdown": "Day"
           },
           "reportExecution": {
@@ -69,7 +73,7 @@ def api_config(account_id, start_date, end_date):
               "exportFileType": "JSON",
               "compressionType": "NONE",
               "emailRecipients": ["email@test.com"],
-              "exportFileNamePrefix": "test"
+              "exportFileNamePrefix": f"{account_id}_{start_date}_{end_date}"
           }],
           "reportAuthorization": {
               "type": "mm3",
